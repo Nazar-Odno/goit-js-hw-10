@@ -16,24 +16,6 @@ textMarkEl.classList.add('is-hidden');
 
 selectEl.addEventListener('change', createMarkUp);
 
-updateSelect();
-
-function updateSelect(data) {
-  fetchBreeds(data)
-    .then(data => {
-      loaderEl.classList.replace('loader', 'is-hidden');
-
-      let markSelect = data.map(({ name, id }) => {
-        return `<option value ='${id}'>${name}</option>`;
-      });
-      selectEl.insertAdjacentHTML('beforeend', markSelect);
-      new SlimSelect({
-        select: selectEl,
-      });
-    })
-    .catch(onFetchError);
-}
-
 function createMarkUp(event) {
   loaderEl.classList.replace('is-hidden', 'loader');
   selectEl.classList.add('is-hidden');
@@ -49,6 +31,24 @@ function createMarkUp(event) {
 
       textMarkEl.innerHTML = `<img src="${url}" alt="${breeds[0].name}" width="400"/><div class="box"><h2>${breeds[0].name}</h2><p>${breeds[0].description}</p><p><strong>Temperament:</strong> ${breeds[0].temperament}</p></div>`;
       textMarkEl.classList.remove('is-hidden');
+    })
+    .catch(onFetchError);
+}
+
+updateSelect();
+
+function updateSelect(data) {
+  fetchBreeds(data)
+    .then(data => {
+      loaderEl.classList.replace('loader', 'is-hidden');
+
+      let markSelect = data.map(({ name, id }) => {
+        return `<option value ='${id}'>${name}</option>`;
+      });
+      selectEl.insertAdjacentHTML('beforeend', markSelect);
+      new SlimSelect({
+        select: selectEl,
+      });
     })
     .catch(onFetchError);
 }
